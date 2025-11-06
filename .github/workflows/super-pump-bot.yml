@@ -1,0 +1,35 @@
+name: Super Pump-Safe Bot
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'   # her 10 dakikada bir (ayarlayabilirsin)
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install deps
+        run: pip install pandas numpy requests
+      - name: Run super bot
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          # opsiyonel ayarlar (değiştirerek ince ayar yap)
+          SCAN_LIMIT_PER_EXCHANGE: "200"
+          TIMEFRAMES: "1m,5m,15m,1h"
+          MIN_TURNOVER: "20000"
+          PUMP_RATIO: "1.8"
+          PUMP_RAMP_MIN: "1.15"
+          PUMP_CONFIRM_CANDLES: "2"
+          WHALE_USD: "800000"
+          WHALe_RATIO: "1.25"
+          FOLLOW_WHALES: "true"
+          MIN_CONF: "60"
+          MAX_LINES_PER_SIDE: "20"
+        run: python main.py
