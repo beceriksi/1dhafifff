@@ -2,8 +2,8 @@ name: OKX 4H Smart Whale Bot
 
 on:
   schedule:
-    - cron: "0 */4 * * *"   # Her 4 saatte bir (00:00, 04:00, 08:00 ... UTC)
-  workflow_dispatch: {}      # İstersen GitHub arayüzünden de elle çalıştırabilirsin
+    - cron: "0 */4 * * *"
+  workflow_dispatch: {}
 
 jobs:
   run-bot:
@@ -25,6 +25,6 @@ jobs:
       - name: Run bot
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          CHAT_ID: ${{ secrets.CH_ID }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
         run: |
           python main.py
