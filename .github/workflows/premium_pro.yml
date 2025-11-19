@@ -1,0 +1,30 @@
+name: Premium PRO Bot
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # Her saat başı çalışır
+  workflow_dispatch:       # Manuel çalıştırma
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Kodu çek
+      uses: actions/checkout@v3
+
+    - name: Python kur
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - name: Gerekli paketleri kur
+      run: |
+        pip install requests
+
+    - name: Botu çalıştır
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+      run: |
+        python3 main_premium_pro.py
